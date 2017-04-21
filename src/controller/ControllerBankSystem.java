@@ -7,9 +7,7 @@ import java.awt.Graphics;
 import java.awt.PrintJob;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataInputStream;
 import java.io.EOFException;
-import java.io.FileInputStream;
 import java.io.LineNumberReader;
 import java.io.StringReader;
 import java.util.Properties;
@@ -19,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
+import model.BankData;
 import view.BankHelp;
 import view.BankSystem;
 import view.DeleteCustomer;
@@ -34,13 +33,9 @@ public class ControllerBankSystem implements ActionListener {
 	
 	private BankSystem bankSystem;
 	
-	private int rows = 0;
 	private	int total = 0;
 	
 	private String records[][] = new String [500][6];
-	
-	private FileInputStream fis;
-	private DataInputStream dis;
 	
 	public ControllerBankSystem(BankSystem bankSystem) {
 		this.bankSystem = bankSystem;
@@ -134,14 +129,14 @@ public class ControllerBankSystem implements ActionListener {
 		} else if(obj == bankSystem.content || obj == bankSystem.btnHelp) {
 			boolean b = openChildWindow ("BankSystem Help");
 			if (b == false) {
-				BankHelp hlpBank = new BankHelp ("BankSystem Help", "Help/Bank.htm");
+				BankHelp hlpBank = new BankHelp ("BankSystem Help", "help/Bank.htm");
 				bankSystem.desktop.add (hlpBank);
 				hlpBank.show ();
 			}
 		} else if(obj == bankSystem.keyHelp || obj == bankSystem.btnKey) {
 			boolean b = openChildWindow ("BankSystem Keys");
 			if (b == false) {
-				BankHelp hlpKey = new BankHelp ("BankSystem Keys", "Help/Keys.htm");
+				BankHelp hlpKey = new BankHelp ("BankSystem Keys", "help/Keys.htm");
 				bankSystem.desktop.add (hlpKey);
 				hlpKey.show ();
 			}
@@ -173,7 +168,6 @@ public class ControllerBankSystem implements ActionListener {
 	
 	private void getAccountNo() {
 		String printing;
-		rows = 0;
 		boolean b = populateArray();
 		if(b == false) {
 			
@@ -196,33 +190,21 @@ public class ControllerBankSystem implements ActionListener {
 	}
 
 	private boolean populateArray() {
-		boolean b = false;
-		try {
-			fis = new FileInputStream("Bank.dat");
-			dis = new DataInputStream(fis);
-			while(true) {
-				for (int i = 0; i < 6; i++) {
-					records[rows][i] = dis.readUTF();
-				}
-				rows++;
-			}
-		} catch (Exception ex) {
-			total = rows;
-			if (total == 0) {
-				JOptionPane.showMessageDialog (null, "Records File is Empty.\nEnter Records First to Display.",
-					 "BankSystem - EmptyFile", JOptionPane.PLAIN_MESSAGE);
-				b = false;
-			}
-			else {
-				b = true;
-				try {
-					dis.close();
-					fis.close();
-				}
-				catch (Exception exp) { }
-			}
+		
+		if(BankData.populateArray()) {
+			total   = BankData.total;
+			records = BankData.records;
+		} 
+		
+		if (total == 0) {
+			JOptionPane.showMessageDialog (null, "Records File is Empty.\nEnter Records First to Display.",
+				 "BankSystem - EmptyFile", JOptionPane.PLAIN_MESSAGE);
+			return false;
 		}
-		return b;
+		else {
+			return true;
+		}
+		
 	}
 
 	private void findRec(String rec) {
@@ -296,7 +278,7 @@ public class ControllerBankSystem implements ActionListener {
 		String data3 = "  Customer Name:     " + records[rec][1] + "\n";
 		String data4 = "  Last Transaction:  " + records[rec][2] + ", " + records[rec][3] + ", " + records[rec][4] + "\n";
 		String data5 = "  Current Balance:   " + records[rec][5] + "\n\n";
-		String data6 = "          Copyright © 2003 Muhammad Wasif Javed.\n";	//Page Footer.
+		String data6 = "                                               \n";	//Page Footer.
 		String sep0 = " -----------------------------------------------------------\n";
 		String sep1 = " -----------------------------------------------------------\n";
 		String sep2 = " -----------------------------------------------------------\n";

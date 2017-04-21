@@ -23,7 +23,6 @@ public class ControllerWindrawMoneyFocusListener implements FocusListener {
 	public void focusLost(FocusEvent fe) {
 		if (newFrame.txtNo.getText().equals ("")) { }
 		else {
-			newFrame.controllerWithdrawMoney.rows = 0;
 			newFrame.controllerWithdrawMoney.populateArray ();
 			newFrame.controllerWithdrawMoney.findRec ();		
 		}

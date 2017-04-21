@@ -23,7 +23,6 @@ public class ControllerDeleteCustomerFocusListener implements FocusListener {
 	public void focusLost(FocusEvent e) {
 		if (deleteCustomer.txtNo.getText().equals ("")) { }
 		else {
-			deleteCustomer.controllerDeleteCustomer.rows = 0;
 			deleteCustomer.controllerDeleteCustomer.populateArray ();	//Load All Existing Records in Memory.
 			deleteCustomer.controllerDeleteCustomer.findRec ();		//Finding if Account No. Already Exist or Not.
 		}

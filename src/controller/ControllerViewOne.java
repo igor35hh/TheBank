@@ -2,11 +2,10 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
 
 import javax.swing.JOptionPane;
 
+import model.BankData;
 import view.ViewOne;
 
 public class ControllerViewOne implements ActionListener {
@@ -14,14 +13,10 @@ public class ControllerViewOne implements ActionListener {
 	private ViewOne viewOne;
 	
 	private int recCount = 0;
-	private int rows = 0;
 	private	int total = 0;
 
 	//String Type Array use to Load Records From File.
 	private String records[][] = new String [500][6];
-
-	private FileInputStream fis;
-	private DataInputStream dis;
 	
 	public ControllerViewOne(ViewOne viewOne) {
 		super();
@@ -67,32 +62,18 @@ public class ControllerViewOne implements ActionListener {
 	}
 	
 	public void populateArray() {
-		try {
-			fis = new FileInputStream ("Bank.dat");
-			dis = new DataInputStream (fis);
-			//Loop to Populate the Array.
-			while (true) {
-				for (int i = 0; i < 6; i++) {
-					records[rows][i] = dis.readUTF ();
-				}
-				rows++;
-			}
+		
+		if(BankData.populateArray()) {
+			total   = BankData.total;
+			records = BankData.records;
+		} 
+		
+		if (total == 0) {
+			JOptionPane.showMessageDialog (null, "Records File is Empty.\nEnter Records First to Display.",
+						"BankSystem - EmptyFile", JOptionPane.PLAIN_MESSAGE);
+			btnEnable ();
 		}
-		catch (Exception ex) {
-			total = rows;
-			if (total == 0) {
-				JOptionPane.showMessageDialog (null, "Records File is Empty.\nEnter Records First to Display.",
-							"BankSystem - EmptyFile", JOptionPane.PLAIN_MESSAGE);
-				btnEnable ();
-			}
-			else {
-				try {
-					dis.close();
-					fis.close();
-				}
-				catch (Exception exp) { }
-			}
-		}
+		
 	}
 
 	private void btnEnable() {

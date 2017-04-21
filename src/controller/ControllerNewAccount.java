@@ -2,14 +2,10 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import model.BankData;
 import view.NewAccount;
 
 public class ControllerNewAccount implements ActionListener {
@@ -17,7 +13,6 @@ public class ControllerNewAccount implements ActionListener {
 	private NewAccount newAccount;
 	
 	private int count = 0;
-	private int rows = 0;
 	private	int total = 0;
 
 	//String Type Array use to Load Records From File.
@@ -25,9 +20,6 @@ public class ControllerNewAccount implements ActionListener {
 
 	//String Type Array use to Save Records into File.
 	private String saves[][] = new String [500][6];
-
-	private FileInputStream fis;
-	private DataInputStream dis;
 	
 	public ControllerNewAccount(NewAccount newAccount) {
 		super();
@@ -90,50 +82,25 @@ public class ControllerNewAccount implements ActionListener {
 	}
 	
 	private void saveFile() {
-		try {
-			FileOutputStream fos = new FileOutputStream ("Bank.dat", true);
-			DataOutputStream dos = new DataOutputStream (fos);
-			dos.writeUTF (saves[count][0]);
-			dos.writeUTF (saves[count][1]);
-			dos.writeUTF (saves[count][2]);
-			dos.writeUTF (saves[count][3]);
-			dos.writeUTF (saves[count][4]);
-			dos.writeUTF (saves[count][5]);
+		
+		if(BankData.saveFile(saves, count)) {
 			JOptionPane.showMessageDialog (null, "The Record has been Saved Successfully",
-						"BankSystem - Record Saved", JOptionPane.PLAIN_MESSAGE);
+					"BankSystem - Record Saved", JOptionPane.PLAIN_MESSAGE);
 			txtClear ();
-			dos.close();
-			fos.close();
-		}
-		catch (IOException ioe) {
+		} else {
 			JOptionPane.showMessageDialog (null, "There are Some Problem with File",
-						"BankSystem - Problem", JOptionPane.PLAIN_MESSAGE);
+					"BankSystem - Problem", JOptionPane.PLAIN_MESSAGE);
 		}
+		
 	}
 
 	private void populateArray() {
-		try {
-			fis = new FileInputStream ("Bank.dat");
-			dis = new DataInputStream (fis);
-			//Loop to Populate the Array.
-			while (true) {
-				for (int i = 0; i < 6; i++) {
-					records[rows][i] = dis.readUTF ();
-				}
-				rows++;
-			}
-		}
-		catch (Exception ex) {
-			total = rows;
-			if (total == 0) { }
-			else {
-				try {
-					dis.close();
-					fis.close();
-				}
-				catch (Exception exp) { }
-			}
-		}
+		
+		if(BankData.populateArray()) {
+			total   = BankData.total;
+			records = BankData.records;
+		} 
+		
 	}
 	
 	private void saveArray() {

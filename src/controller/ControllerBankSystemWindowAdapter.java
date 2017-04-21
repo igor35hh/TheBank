@@ -3,9 +3,6 @@ package controller;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
 import view.BankSystem;
 
 public class ControllerBankSystemWindowAdapter extends WindowAdapter {

@@ -2,14 +2,10 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import model.BankData;
 import view.WithdrawMoney;
 
 public class ControllerWithdrawMoney implements ActionListener {
@@ -17,16 +13,12 @@ public class ControllerWithdrawMoney implements ActionListener {
 	private WithdrawMoney withdrawMoney;
 	
 	private int recCount = 0;
-	public int rows = 0;
 	private	int total = 0;
 	private	int curr;
 	private	int withdraw;
 
 	//String Type Array use to Load Records From File.
 	private String records[][] = new String [500][6];
-
-	private FileInputStream fis;
-	private DataInputStream dis;
 	
 	public ControllerWithdrawMoney(WithdrawMoney withdrawMoney) {
 		this.withdrawMoney = withdrawMoney;
@@ -97,32 +89,18 @@ public class ControllerWithdrawMoney implements ActionListener {
 	}
 
 	public void populateArray() {
-		try {
-			fis = new FileInputStream ("Bank.dat");
-			dis = new DataInputStream (fis);
-			//Loop to Populate the Array.
-			while (true) {
-				for (int i = 0; i < 6; i++) {
-					records[rows][i] = dis.readUTF ();
-				}
-				rows++;
-			}
+		
+		if(BankData.populateArray()) {
+			total   = BankData.total;
+			records = BankData.records;
+		} 
+		
+		if (total == 0) {
+			JOptionPane.showMessageDialog (null, "Records File is Empty.\nEnter Records First to Display.",
+						"BankSystem - EmptyFile", JOptionPane.PLAIN_MESSAGE);
+			btnEnable ();
 		}
-		catch (Exception ex) {
-			total = rows;
-			if (total == 0) {
-				JOptionPane.showMessageDialog (null, "Records File is Empty.\nEnter Records First to Display.",
-							"BankSystem - EmptyFile", JOptionPane.PLAIN_MESSAGE);
-				btnEnable ();
-			}
-			else {
-				try {
-					dis.close();
-					fis.close();
-				}
-				catch (Exception exp) { }
-			}
-		}
+		
 	}
 
 	private void btnEnable() {
@@ -145,27 +123,16 @@ public class ControllerWithdrawMoney implements ActionListener {
 	}
 
 	private void editFile() {
-		try {
-			FileOutputStream fos = new FileOutputStream ("Bank.dat");
-			DataOutputStream dos = new DataOutputStream (fos);
-			if (records != null) {
-				for (int i = 0; i < total; i++) {
-					for (int c = 0; c < 6; c++) {
-						dos.writeUTF (records[i][c]);
-						if (records[i][c] == null) break;
-					}
-				}
-				JOptionPane.showMessageDialog (null, "The File is Updated Successfully",
-						"BankSystem - Record Saved", JOptionPane.PLAIN_MESSAGE);
-				txtClear ();
-				dos.close();
-				fos.close();
-			}
-		}
-		catch (IOException ioe) {
+		
+		if(BankData.updateFile(records, total)) {
+			JOptionPane.showMessageDialog (null, "The File is Updated Successfully",
+					"BankSystem - Record Saved", JOptionPane.PLAIN_MESSAGE);
+			txtClear ();
+		} else {
 			JOptionPane.showMessageDialog (null, "There are Some Problem with File",
 					"BankSystem - Problem", JOptionPane.PLAIN_MESSAGE);
 		}
+		
 	}
 
 	private void txtClear() {

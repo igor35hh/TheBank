@@ -113,17 +113,17 @@ public class BankSystem extends JFrame {
 		mnuHelp = new JMenu ("Help");
 		mnuHelp.setMnemonic ((int)'H');
 		
-		addNew = new JMenuItem ("Open New Account", new ImageIcon ("Images/Open.gif"));
+		addNew = new JMenuItem ("Open New Account", new ImageIcon ("images/Open.gif"));
 		addNew.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, Event.CTRL_MASK));
 		addNew.setMnemonic((int)'N');
 		addNew.addActionListener(controllerBankSystem);
 		
-		printRec = new JMenuItem ("Print Customer Balance", new ImageIcon ("Images/New.gif"));
+		printRec = new JMenuItem ("Print Customer Balance", new ImageIcon ("images/New.gif"));
 		printRec.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_R, Event.CTRL_MASK));
 		printRec.setMnemonic ((int)'R');
 		printRec.addActionListener (controllerBankSystem);
 		
-		end = new JMenuItem ("Quit BankSystem ?", new ImageIcon ("Images/export.gif"));
+		end = new JMenuItem ("Quit BankSystem ?", new ImageIcon ("images/export.gif"));
 		end.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_Q, Event.CTRL_MASK));
 		end.setMnemonic ((int)'Q');	
 		end.addActionListener (controllerBankSystem);
@@ -138,12 +138,12 @@ public class BankSystem extends JFrame {
 		withdraw.setMnemonic ((int)'W');	
 		withdraw.addActionListener (controllerBankSystem);
 		
-		delRec = new JMenuItem ("Delete Customer", new ImageIcon ("Images/Delete.gif"));
+		delRec = new JMenuItem ("Delete Customer", new ImageIcon ("images/Delete.gif"));
 		delRec.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_D, Event.CTRL_MASK));
 		delRec.setMnemonic ((int)'D');
 		delRec.addActionListener (controllerBankSystem);
 		
-		search = new JMenuItem ("Search By No.", new ImageIcon ("Images/find.gif"));
+		search = new JMenuItem ("Search By No.", new ImageIcon ("images/find.gif"));
 		search.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
 		search.setMnemonic ((int)'S');	
 		search.addActionListener (controllerBankSystem);
@@ -158,7 +158,7 @@ public class BankSystem extends JFrame {
 		oneByOne.setMnemonic ((int)'O');	
 		oneByOne.addActionListener (controllerBankSystem);
 		
-		allCustomer = new JMenuItem ("View All Customer", new ImageIcon ("Images/refresh.gif"));
+		allCustomer = new JMenuItem ("View All Customer", new ImageIcon ("images/refresh.gif"));
 		allCustomer.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
 		allCustomer.setMnemonic ((int)'A');
 		allCustomer.addActionListener (controllerBankSystem);
@@ -190,7 +190,7 @@ public class BankSystem extends JFrame {
 		closeAll.setMnemonic ((int)'A');
 		closeAll.addActionListener (controllerBankSystem);
 		
-		content = new JMenuItem ("Help Contents", new ImageIcon ("Images/paste.gif"));
+		content = new JMenuItem ("Help Contents", new ImageIcon ("images/paste.gif"));
 		content.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_H, Event.CTRL_MASK));
 		content.setMnemonic ((int)'H');
 		content.addActionListener (controllerBankSystem);
@@ -200,7 +200,7 @@ public class BankSystem extends JFrame {
 		keyHelp.setMnemonic ((int)'K');
 		keyHelp.addActionListener (controllerBankSystem);
 		
-		about = new JMenuItem ("About BankSystem", new ImageIcon ("Images/Save.gif"));
+		about = new JMenuItem ("About BankSystem", new ImageIcon ("images/Save.gif"));
 		about.setAccelerator (KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK));
 		about.setMnemonic ((int)'C');
 		about.addActionListener (controllerBankSystem);
@@ -245,10 +245,10 @@ public class BankSystem extends JFrame {
 		bar.add (mnuWin);
 		bar.add (mnuHelp);
 		
-		open = new JMenuItem ("Open New Account", new ImageIcon ("Images/Open.gif"));
+		open = new JMenuItem ("Open New Account", new ImageIcon ("images/Open.gif"));
 		open.addActionListener (controllerBankSystem);
 		
-		report = new JMenuItem ("Print BankSystem Report", new ImageIcon ("Images/New.gif"));
+		report = new JMenuItem ("Print BankSystem Report", new ImageIcon ("images/New.gif"));
 		report.addActionListener (controllerBankSystem);
 		
 		dep = new JMenuItem ("Deposit Money");
@@ -257,13 +257,13 @@ public class BankSystem extends JFrame {
 		with = new JMenuItem ("Withdraw Money");
 		with.addActionListener (controllerBankSystem);
 		
-		del = new JMenuItem ("Delete Customer", new ImageIcon ("Images/Delete.gif"));
+		del = new JMenuItem ("Delete Customer", new ImageIcon ("images/Delete.gif"));
 		del.addActionListener (controllerBankSystem);
 		
-		find = new JMenuItem ("Search Customer", new ImageIcon ("Images/find.gif"));
+		find = new JMenuItem ("Search Customer", new ImageIcon ("images/find.gif"));
 		find.addActionListener (controllerBankSystem);
 		
-		all = new JMenuItem ("View All Customer", new ImageIcon ("Images/refresh.gif"));
+		all = new JMenuItem ("View All Customer", new ImageIcon ("images/refresh.gif"));
 		all.addActionListener (controllerBankSystem);
 		
 		popMenu.add (open);
@@ -284,35 +284,35 @@ public class BankSystem extends JFrame {
 			};
 		});
 		
-		btnNew = new JButton (new ImageIcon ("Images/NotePad.gif"));
+		btnNew = new JButton (new ImageIcon ("images/NotePad.gif"));
 		btnNew.setToolTipText ("Create New Account");
 		btnNew.addActionListener (controllerBankSystem);
 		
-		btnDep = new JButton (new ImageIcon ("Images/ImationDisk.gif"));
+		btnDep = new JButton (new ImageIcon ("images/ImationDisk.gif"));
 		btnDep.setToolTipText ("Deposit Money");
 		btnDep.addActionListener (controllerBankSystem);
 		
-		btnWith = new JButton (new ImageIcon ("Images/SuperDisk.gif"));
+		btnWith = new JButton (new ImageIcon ("images/SuperDisk.gif"));
 		btnWith.setToolTipText ("Withdraw Money");
 		btnWith.addActionListener (controllerBankSystem);
 		
-		btnRec = new JButton (new ImageIcon ("Images/Paproll.gif"));
+		btnRec = new JButton (new ImageIcon ("images/Paproll.gif"));
 		btnRec.setToolTipText ("Print Customer Balance");
 		btnRec.addActionListener (controllerBankSystem);
 		
-		btnDel = new JButton (new ImageIcon ("Images/Toaster.gif"));
+		btnDel = new JButton (new ImageIcon ("images/Toaster.gif"));
 		btnDel.setToolTipText ("Delete Customer");
 		btnDel.addActionListener (controllerBankSystem);
 		
-		btnSrch = new JButton (new ImageIcon ("Images/Search.gif"));
+		btnSrch = new JButton (new ImageIcon ("images/Search.gif"));
 		btnSrch.setToolTipText ("Search Customer");
 		btnSrch.addActionListener (controllerBankSystem);
 		
-		btnHelp = new JButton (new ImageIcon ("Images/Help.gif"));
+		btnHelp = new JButton (new ImageIcon ("images/Help.gif"));
 		btnHelp.setToolTipText ("Help on Bank System");
 		btnHelp.addActionListener (controllerBankSystem);
 		
-		btnKey = new JButton (new ImageIcon ("Images/Keys.gif"));
+		btnKey = new JButton (new ImageIcon ("images/Keys.gif"));
 		btnKey.setToolTipText ("Shortcut Keys of BankSystem");
 		btnKey.addActionListener (controllerBankSystem);
 		

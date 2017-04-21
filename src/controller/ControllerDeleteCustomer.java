@@ -2,14 +2,9 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import javax.swing.JOptionPane;
 
+import model.BankData;
 import view.DeleteCustomer;
 
 public class ControllerDeleteCustomer implements ActionListener {
@@ -17,14 +12,10 @@ public class ControllerDeleteCustomer implements ActionListener {
 	private DeleteCustomer deleteCustomer;
 	
 	private int recCount = 0;
-	public int rows = 0;
 	private	int total = 0;
 
 	//String Type Array use to Load Records From File.
 	private String records[][] = new String [500][6];
-
-	private FileInputStream fis;
-	private DataInputStream dis;
 	
 	public ControllerDeleteCustomer(DeleteCustomer deleteCustomer) {
 		super();
@@ -78,31 +69,12 @@ public class ControllerDeleteCustomer implements ActionListener {
 	}
 
 	public void populateArray() {
-		try {
-			fis = new FileInputStream ("Bank.dat");
-			dis = new DataInputStream (fis);
-			//Loop to Populate the Array.
-			while (true) {
-				for (int i = 0; i < 6; i++) {
-					records[rows][i] = dis.readUTF ();
-				}
-				rows++;
-			}
-		}
-		catch (Exception ex) {
-			total = rows;
-			if (total == 0) {
-				JOptionPane.showMessageDialog (null, "Records File is Empty.\nEnter Records First to Display.",
-					"BankSystem - EmptyFile", JOptionPane.PLAIN_MESSAGE);
-				btnEnable ();
-			}
-			else {
-				try {
-					dis.close();
-					fis.close();
-				}
-				catch (Exception exp) { }
-			}
+		
+		if(BankData.populateArray()) {
+			total   = BankData.total;
+			records = BankData.records;
+		} else {
+			btnEnable ();
 		}
 	}
 
@@ -150,28 +122,16 @@ public class ControllerDeleteCustomer implements ActionListener {
 	}
 
 	private void deleteFile() {
-		try {
-			FileOutputStream fos = new FileOutputStream ("Bank.dat");
-			DataOutputStream dos = new DataOutputStream (fos);
-			if (records != null) {
-				for (int i = 0; i < total; i++) {
-					for (int r = 0; r < 6; r++) {
-						dos.writeUTF (records[i][r]);
-						if (records[i][r] == null) break;
-					}
-				}
-				JOptionPane.showMessageDialog (null, "Record has been Deleted Successfuly.",
+		
+		if(BankData.deleteFile(records, total)) {
+			JOptionPane.showMessageDialog (null, "Record has been Deleted Successfuly.",
 					"BankSystem - Record Deleted", JOptionPane.PLAIN_MESSAGE);
-				txtClear ();
-			}
-			else { }
-			dos.close();
-			fos.close();
-		}
-		catch (IOException ioe) {
+			txtClear ();
+		} else {
 			JOptionPane.showMessageDialog (null, "There are Some Problem with File",
-						"BankSystem - Problem", JOptionPane.PLAIN_MESSAGE);
+					"BankSystem - Problem", JOptionPane.PLAIN_MESSAGE);
 		}
+		
 	}
 
 }

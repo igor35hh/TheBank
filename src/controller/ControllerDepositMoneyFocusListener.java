@@ -22,7 +22,6 @@ public class ControllerDepositMoneyFocusListener implements FocusListener {
 	public void focusLost(FocusEvent fe) {
 		if (newFrame.txtNo.getText().equals ("")) { }
 		else {
-			newFrame.controllerDepositMoney.rows = 0;
 			newFrame.controllerDepositMoney.populateArray ();
 			newFrame.controllerDepositMoney.findRec ();		
 		}

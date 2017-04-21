@@ -2,25 +2,20 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
 
 import javax.swing.JOptionPane;
 
+import model.BankData;
 import view.FindName;
 
 public class ControllerFindName implements ActionListener {
 	
 	private FindName findName;
 	
-	private int rows = 0;
 	private	int total = 0;
 
 	//String Type Array use to Load Records From File.
 	private String records[][] = new String [500][6];
-
-	private FileInputStream fis;
-	private DataInputStream dis;
 	
 	public ControllerFindName(FindName findName) {
 		super();
@@ -38,7 +33,6 @@ public class ControllerFindName implements ActionListener {
 				findName.txtName.requestFocus();
 			}
 			else {
-				rows = 0;
 				populateArray ();	//Load All Existing Records in Memory.
 				findRec ();		//Finding if Account No. Exist or Not.
 			}
@@ -82,32 +76,18 @@ public class ControllerFindName implements ActionListener {
 	}
 
 	public void populateArray() {
-		try {
-			fis = new FileInputStream ("Bank.dat");
-			dis = new DataInputStream (fis);
-			//Loop to Populate the Array.
-			while (true) {
-				for (int i = 0; i < 6; i++) {
-					records[rows][i] = dis.readUTF ();
-				}
-				rows++;
-			}
+		
+		if(BankData.populateArray()) {
+			total   = BankData.total;
+			records = BankData.records;
+		} 
+		
+		if (total == 0) {
+			JOptionPane.showMessageDialog (null, "Records File is Empty.\nEnter Records First to Display.",
+						"BankSystem - EmptyFile", JOptionPane.PLAIN_MESSAGE);
+			btnEnable ();
 		}
-		catch (Exception ex) {
-			total = rows;
-			if (total == 0) {
-				JOptionPane.showMessageDialog (null, "Records File is Empty.\nEnter Records First to Display.",
-							"BankSystem - EmptyFile", JOptionPane.PLAIN_MESSAGE);
-				btnEnable ();
-			}
-			else {
-				try {
-					dis.close();
-					fis.close();
-				}
-				catch (Exception exp) { }
-			}
-		}
+		
 	}
 
 	private void btnEnable() {
