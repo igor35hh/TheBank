@@ -3,7 +3,6 @@ package view;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.swing.JEditorPane;
 import javax.swing.JScrollPane;
@@ -20,7 +19,6 @@ public class HtmlPane extends JScrollPane {
 			File f = new File (filename);
 			String s = f.getAbsolutePath();
 			s = "file:"+s;
-			URL url = new URL(s);
 			html = new JEditorPane(s);
 			html.setEditable(false);
 			

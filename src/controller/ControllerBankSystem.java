@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 
 import model.BankData;
 import view.BankHelp;
+import view.BankReport;
 import view.BankSystem;
 import view.DeleteCustomer;
 import view.DepositMoney;
@@ -212,7 +213,8 @@ public class ControllerBankSystem implements ActionListener {
 		for (int i = 0; i < total; i++) {
 			if(records[i][0].equals(rec)) {
 				found = true;
-				printRecord(makeRecordPrint(i));
+				//printRecord(makeRecordPrint(i));
+				reportRecord(makeRecordPrint(i));
 				break;
 			}
 		}
@@ -220,6 +222,15 @@ public class ControllerBankSystem implements ActionListener {
 			JOptionPane.showMessageDialog (null, "Account No. " + rec + " doesn't Exist.",
 					 "BankSystem - WrongNo", JOptionPane.PLAIN_MESSAGE);
 			getAccountNo ();
+		}
+	}
+	
+	private void reportRecord(String rec) {
+		boolean b = openChildWindow ("BankSystem Report");
+		if (b == false) {
+			BankReport hlpBank = new BankReport ("BankSystem report", rec);
+			bankSystem.desktop.add (hlpBank);
+			hlpBank.show ();
 		}
 	}
 
